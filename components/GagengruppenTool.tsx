@@ -34,7 +34,6 @@ const GagengruppenTool: React.FC = () => {
     fileInputRef.current?.click();
   };
 
-  // Handle file import
   const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -46,21 +45,21 @@ const GagengruppenTool: React.FC = () => {
         let importedGroups: Group[];
 
         if (Array.isArray(content)) {
-          importedGroups = content.map(g => ({
+          importedGroups = content.map((g: { groupsalary: string | number, jobs: Job[] }) => ({
             ...g,
-            groupsalary: parseFloat(g.groupsalary),
-            jobs: g.jobs.map(j => ({
+            groupsalary: parseFloat(g.groupsalary.toString()),
+            jobs: g.jobs.map((j: Job) => ({
               ...j,
-              salary: parseFloat(j.salary)
+              salary: parseFloat(j.salary.toString())
             }))
           }));
         } else if (content.groups) {
-          importedGroups = content.groups.map(g => ({
+          importedGroups = content.groups.map((g: { groupsalary: string | number, jobs: Job[] }) => ({
             ...g,
-            groupsalary: parseFloat(g.groupsalary),
-            jobs: g.jobs.map(j => ({
+            groupsalary: parseFloat(g.groupsalary.toString()),
+            jobs: g.jobs.map((j: Job) => ({
               ...j,
-              salary: parseFloat(j.salary)
+              salary: parseFloat(j.salary.toString())
             }))
           }));
         } else {
