@@ -53,10 +53,10 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
 
   return (
     <div 
-      className={`mb-2 hover:bg-gray-100 transition-colors ${isOdd ? 'bg-gray-100' : ''}`}
-      onDragOver={onDragOver}
-      onDrop={(e) => onDrop(e, group.group)}
-    >
+    className={`mb-2 ${isOdd ? 'bg-gray-50' : 'bg-white'}`}
+    onDragOver={onDragOver}
+    onDrop={(e) => onDrop(e, group.group)}
+  >
       <div className="flex items-center min-h-12 border-b">
         {/* Group Info */}
         <div className="flex items-center space-x-4 min-w-48 px-4 py-1 border-r">
@@ -94,20 +94,20 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
                 
                 return (
                   <div 
-                    key={job.id}
-                    draggable
-                    onDragStart={(e) => {
-                      e.dataTransfer.setData(
-                        'application/json',
-                        JSON.stringify(job)
-                      );
-                    }}
-                    className="flex items-center space-x-3 px-3 py-1.5 cursor-move min-w-64 m-1 rounded-full border-2 bg-white shadow-sm transition-all"
-                    style={{ 
-                      borderColor: DEPARTMENT_COLORS[job.department] || DEPARTMENT_COLORS['Sonstige'],
-                      opacity: 0.9,
-                    }}
-                  >
+  key={job.id}
+  draggable
+  onDragStart={(e) => {
+    e.dataTransfer.setData(
+      'application/json',
+      JSON.stringify(job)
+    );
+  }}
+  className="flex items-center space-x-3 px-3 py-1.5 cursor-move min-w-64 m-1 rounded-full border-2 bg-white shadow-sm transition-all hover:shadow-md hover:scale-[1.02] hover:bg-gray-50"
+  style={{ 
+    borderColor: DEPARTMENT_COLORS[job.department] || DEPARTMENT_COLORS['Sonstige'],
+    opacity: 0.9,
+  }}
+>
                     <div className="font-medium text-sm truncate flex-1">
                       {job.title}
                     </div>
