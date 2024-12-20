@@ -8,6 +8,19 @@ import GroupComponent from './group';
 import DepartmentFilter from './departmentFilter';
 import DepartmentOverview from './department-overview';
 
+interface ImportedJob {
+  id: string;
+  title: string;
+  salary: string | number;
+  department: string;
+}
+
+interface ImportedGroup {
+  group: number;
+  groupsalary: string | number;
+  jobs: ImportedJob[];
+}
+
 const GagengruppenTool: React.FC = () => {
   const [groups, setGroups] = useState<Group[]>([]);
   const [needsReordering, setNeedsReordering] = useState(false);
@@ -45,19 +58,19 @@ const GagengruppenTool: React.FC = () => {
         let importedGroups: Group[];
 
         if (Array.isArray(content)) {
-          importedGroups = content.map((g: { groupsalary: string | number, jobs: Job[] }) => ({
+          importedGroups = content.map((g: ImportedGroup) => ({
             ...g,
             groupsalary: parseFloat(g.groupsalary.toString()),
-            jobs: g.jobs.map((j: Job) => ({
+            jobs: g.jobs.map((j: ImportedJob) => ({
               ...j,
               salary: parseFloat(j.salary.toString())
             }))
           }));
         } else if (content.groups) {
-          importedGroups = content.groups.map((g: { groupsalary: string | number, jobs: Job[] }) => ({
+          importedGroups = content.groups.map((g: ImportedGroup) => ({
             ...g,
             groupsalary: parseFloat(g.groupsalary.toString()),
-            jobs: g.jobs.map((j: Job) => ({
+            jobs: g.jobs.map((j: ImportedJob) => ({
               ...j,
               salary: parseFloat(j.salary.toString())
             }))
@@ -69,7 +82,6 @@ const GagengruppenTool: React.FC = () => {
         setGroups(importedGroups);
         setNeedsReordering(true);
 
-        // Reset file input
         if (fileInputRef.current) {
           fileInputRef.current.value = '';
         }
@@ -79,7 +91,7 @@ const GagengruppenTool: React.FC = () => {
       }
     };
     reader.readAsText(file);
-  };
+};
 
   // Export handling
   const handleExportClick = () => {
