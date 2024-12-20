@@ -1,5 +1,7 @@
+export type DepartmentName = 'Regie' | 'Produktion' | 'Kamera' | 'Ton' | 'Schnitt' | 'Szenenbild' | 'Kostüm' | 'Maske' | 'Licht/Bühne' | 'Sonstige';
+
 // Constants
-export const DEPARTMENT_COLORS = {
+export const DEPARTMENT_COLORS: Record<DepartmentName, string> = {
   'Regie': '#FFB3BA',
   'Produktion': '#26E6F8',
   'Kamera': '#BAE1FF',
@@ -11,7 +13,6 @@ export const DEPARTMENT_COLORS = {
   'Licht/Bühne': '#4125F9',
   'Sonstige': '#F0F0F0'
 };
-
 // Helper functions
 export const formatCurrency = (salary: number): string => 
   `€${salary.toFixed(2).replace('.', ',')}`;
@@ -36,7 +37,7 @@ export interface Job {
   id: string;
   title: string;
   salary: number;
-  department: string;
+  department: DepartmentName;  // Update this line
 }
 
 export interface Group {

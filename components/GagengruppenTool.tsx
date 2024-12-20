@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
 import { PlusCircle, FileUp, Download } from 'lucide-react';
-import { Group, Job, DEPARTMENT_COLORS } from './types';
+import { Group, Job, DepartmentName,DEPARTMENT_COLORS } from './types';
 import GroupComponent from './group';
 import DepartmentFilter from './departmentFilter';
 import DepartmentOverview from './department-overview';
@@ -12,7 +12,7 @@ interface ImportedJob {
   id: string;
   title: string;
   salary: string | number;
-  department: string;
+  department: DepartmentName;  // Update this to use DepartmentName
 }
 
 interface ImportedGroup {
@@ -61,35 +61,28 @@ const GagengruppenTool: React.FC = () => {
           importedGroups = content.map((g: ImportedGroup) => ({
             ...g,
             groupsalary: parseFloat(g.groupsalary.toString()),
-            jobs: g.jobs.map((j: { 
-              id: string;
-              title: string;
-              salary: string | number;
-              department: string;
-            }) => ({
+            jobs: g.jobs.map((j: ImportedJob) => ({
               id: j.id,
               title: j.title,
-              department: j.department,
+              department: j.department as DepartmentName,  // Add type assertion here
               salary: parseFloat(j.salary.toString())
             }))
           }));
-        } else if (content.groups) {
+        }
+        
+        // And in the else if block:
+         else if (content.groups) {
           importedGroups = content.groups.map((g: ImportedGroup) => ({
             ...g,
             groupsalary: parseFloat(g.groupsalary.toString()),
-            jobs: g.jobs.map((j: { 
-              id: string;
-              title: string;
-              salary: string | number;
-              department: string;
-            }) => ({
+            jobs: g.jobs.map((j: ImportedJob) => ({
               id: j.id,
               title: j.title,
-              department: j.department,
+              department: j.department as DepartmentName,  // Add type assertion here
               salary: parseFloat(j.salary.toString())
             }))
           }));
-        } else {
+        }else {
           throw new Error('Invalid JSON structure');
         }
 

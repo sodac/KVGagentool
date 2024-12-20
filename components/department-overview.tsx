@@ -1,10 +1,17 @@
 "use client";
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { DEPARTMENT_COLORS, formatCurrency, Group } from './types';
+import { DEPARTMENT_COLORS, formatCurrency, Group, DepartmentName } from './types';
+
 
 interface DepartmentOverviewProps {
   groups: Group[];
+}
+interface DepartmentStat {
+  department: DepartmentName;
+  min: number;
+  max: number;
+  avg: number;
 }
 
 const DepartmentOverview: React.FC<DepartmentOverviewProps> = ({ groups }) => {
@@ -13,21 +20,22 @@ const DepartmentOverview: React.FC<DepartmentOverviewProps> = ({ groups }) => {
   );
 
   // Calculate department statistics
-  const departmentStats = Object.entries(
+
+  const departmentStats: DepartmentStat[] = Object.entries(
     allJobsWithSalary.reduce((acc, { department, groupSalary }) => {
       if (!acc[department]) {
         acc[department] = { min: Infinity, max: -Infinity, sum: 0, count: 0 };
       }
-
+  
       acc[department].min = Math.min(acc[department].min, groupSalary);
       acc[department].max = Math.max(acc[department].max, groupSalary);
       acc[department].sum += groupSalary;
       acc[department].count++;
-
+  
       return acc;
     }, {} as Record<string, { min: number; max: number; sum: number; count: number }>)
   ).map(([department, { min, max, sum, count }]) => ({
-    department,
+    department: department as DepartmentName,  // Add this type assertion
     min,
     max,
     avg: sum / count
