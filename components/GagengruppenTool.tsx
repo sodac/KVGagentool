@@ -61,8 +61,15 @@ const GagengruppenTool: React.FC = () => {
           importedGroups = content.map((g: ImportedGroup) => ({
             ...g,
             groupsalary: parseFloat(g.groupsalary.toString()),
-            jobs: g.jobs.map((j: ImportedJob) => ({
-              ...j,
+            jobs: g.jobs.map((j: { 
+              id: string;
+              title: string;
+              salary: string | number;
+              department: string;
+            }) => ({
+              id: j.id,
+              title: j.title,
+              department: j.department,
               salary: parseFloat(j.salary.toString())
             }))
           }));
@@ -70,8 +77,15 @@ const GagengruppenTool: React.FC = () => {
           importedGroups = content.groups.map((g: ImportedGroup) => ({
             ...g,
             groupsalary: parseFloat(g.groupsalary.toString()),
-            jobs: g.jobs.map((j: ImportedJob) => ({
-              ...j,
+            jobs: g.jobs.map((j: { 
+              id: string;
+              title: string;
+              salary: string | number;
+              department: string;
+            }) => ({
+              id: j.id,
+              title: j.title,
+              department: j.department,
               salary: parseFloat(j.salary.toString())
             }))
           }));
