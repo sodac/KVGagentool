@@ -3,7 +3,7 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
-import { PlusCircle, FileUp, Download, Eye, EyeOff } from 'lucide-react';
+import { PlusCircle, FileUp, Download, Eye, EyeOff, FileSpreadsheet } from 'lucide-react';
 import { Group, Job, DepartmentName,DEPARTMENT_COLORS } from './types';
 import GroupComponent from './group';
 import DepartmentFilter from './departmentFilter';
@@ -113,7 +113,7 @@ const GagengruppenTool: React.FC = () => {
     setIsExportDialogOpen(true);
   };
 
-  const handleExport = () => {
+  const handleExport = async () => {
     if (!exportFilename) return;
     
     const exportData = {
@@ -143,6 +143,51 @@ const GagengruppenTool: React.FC = () => {
     URL.revokeObjectURL(url);
     setIsExportDialogOpen(false);
     setExportFilename('');
+  };
+
+  const handleExcelExport = async () => {
+    try {
+      const exportData = {
+        groups: groups.map(({ group, groupsalary, jobs }) => ({
+          group,
+          groupsalary: groupsalary.toFixed(2),
+          jobs: jobs.map(({ id, title, salary, department }) => ({
+            id,
+            title,
+            salary: salary !== undefined ? salary.toFixed(2) : undefined,
+            department
+          }))
+        }))
+      };
+
+      const response = await fetch('/api/export-excel', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(exportData),
+      });
+
+      if (!response.ok) throw new Error('Failed to generate Excel file');
+
+      // Get the blob from the response
+      const blob = await response.blob();
+      
+      // Create a download link
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Gagengruppen_2025.xlsx';
+      document.body.appendChild(link);
+      link.click();
+      
+      // Cleanup
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error exporting Excel:', error);
+      alert('Failed to generate Excel file');
+    }
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -315,6 +360,14 @@ const GagengruppenTool: React.FC = () => {
         >
           <Download size={20} />
           <span>Datei speichern</span>
+        </Button>
+        <Button 
+          onClick={handleExcelExport}
+          className="flex items-center space-x-2"
+          disabled={groups.length === 0}
+        >
+          <FileSpreadsheet size={20} />
+          <span>Excel Export</span>
         </Button>
       </div>
 

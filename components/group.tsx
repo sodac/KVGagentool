@@ -1,5 +1,14 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+
+// UUID generator function
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { JobEditDialog } from './job-edit-dialog';
@@ -158,8 +167,8 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
             <button
               onClick={() => {
                 const newJob: Job = {
-                  id: crypto.randomUUID(),
-                  title: '',
+                  id: generateUUID(),
+                  title: 'Neue Position',
                   department: 'Sonstige',
                 };
                 setSelectedJob(newJob);

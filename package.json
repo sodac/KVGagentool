@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "gagengruppen-tool",
   "version": "0.1.0",
   "private": true,
@@ -19,7 +20,8 @@
     "react-dom": "^19.0.0",
     "shadcn-ui": "^0.9.4",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
