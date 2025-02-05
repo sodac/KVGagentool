@@ -6,7 +6,15 @@ import { DEPARTMENT_COLORS, formatCurrency, Group, DepartmentName } from './type
 
 interface DepartmentOverviewProps {
   groups: Group[];
+  salaryMode: '60h' | '40h';
 }
+
+const convertSalary = (salary: number, to: '40h' | '60h') => {
+  if (to === '60h') {
+    return salary / 0.560524819952065;
+  }
+  return salary; // Return base wage (40h) as is
+};
 interface DepartmentStat {
   department: DepartmentName;
   min: number;
@@ -14,9 +22,13 @@ interface DepartmentStat {
   avg: number;
 }
 
-const DepartmentOverview: React.FC<DepartmentOverviewProps> = ({ groups }) => {
+const DepartmentOverview: React.FC<DepartmentOverviewProps> = ({ groups, salaryMode }) => {
   const allJobsWithSalary = groups.flatMap(g => 
-    g.jobs.map(j => ({ ...j, groupSalary: g.groupsalary }))
+    g.jobs.map(j => ({ 
+      ...j, 
+      groupSalary: salaryMode === '60h' ? convertSalary(g.groupsalary, '60h') : g.groupsalary,
+      salary: salaryMode === '60h' ? convertSalary(j.salary, '60h') : j.salary
+    }))
   );
 
   // Calculate department statistics

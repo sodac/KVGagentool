@@ -30,6 +30,14 @@ const GagengruppenTool: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
   const [exportFilename, setExportFilename] = useState('');
+  const [salaryMode, setSalaryMode] = useState<'60h' | '40h'>('60h');
+
+  const convertSalary = (salary: number, to: '40h' | '60h') => {
+    if (to === '60h') {
+      return salary / 0.560524819952065;
+    }
+    return salary; // Return base wage (40h) as is
+  };
 
   // Reorder groups when needed
   useEffect(() => {
@@ -192,10 +200,11 @@ const GagengruppenTool: React.FC = () => {
   };
 
   const handleGroupSalaryChange = (groupId: number, salary: number) => {
+    const actualSalary = salaryMode === '40h' ? convertSalary(salary, '60h') : salary;
     setGroups(currentGroups =>
       currentGroups.map(group =>
         group.group === groupId
-          ? { ...group, groupsalary: salary }
+          ? { ...group, groupsalary: actualSalary }
           : group
       )
     );
@@ -217,11 +226,20 @@ const GagengruppenTool: React.FC = () => {
       <h1 className="text-2xl font-bold mb-2">
         KV Filmschaffende Gagengruppen Tool
       </h1>
-      <p className="mb-4 text-sm text-gray-600">
-        Gagen laut KV 2024, §7(60h) inkl. SZ
-      </p>
-
       <div className="flex justify-between items-center mb-4">
+        <p className="text-sm text-gray-600">
+          Gagen laut KV 2025, {salaryMode === '60h' ? '§7(60h) inkl. SZ' : '40h exkl. SZ'}
+        </p>
+        <Button
+          onClick={() => setSalaryMode(prev => prev === '60h' ? '40h' : '60h')}
+          variant="outline"
+          className="ml-4"
+        >
+          {salaryMode === '60h' ? 'Zu 40h wechseln' : 'Zu 60h wechseln'}
+        </Button>
+      </div>
+
+      <div className="flex justify-between items-center mb-4 mt-4">
         <div className="flex items-center space-x-2">
           <input
             type="file"
@@ -266,8 +284,14 @@ const GagengruppenTool: React.FC = () => {
         {groups.map((group, index) => (
           <GroupComponent
             key={group.group}
-            group={group}
-            jobs={group.jobs}
+            group={{
+              ...group,
+              groupsalary: salaryMode === '60h' ? convertSalary(group.groupsalary, '60h') : group.groupsalary,
+            }}
+            jobs={group.jobs.map(job => ({
+              ...job,
+              salary: salaryMode === '60h' ? convertSalary(job.salary, '60h') : job.salary,
+            }))}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
             onGroupSalaryChange={handleGroupSalaryChange}
@@ -301,7 +325,7 @@ const GagengruppenTool: React.FC = () => {
 
       {/* Department Overview or Message */}
       {groups.length > 0 ? (
-        <DepartmentOverview groups={groups} />
+        <DepartmentOverview groups={groups} salaryMode={salaryMode} />
       ) : (
         <div className="mt-8 text-center text-gray-500">
           Bitte zuerst eine passende .json Datei öffnen
