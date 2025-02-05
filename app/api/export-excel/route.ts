@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
+import { Group, Job } from '@/components/types';
 
 export async function POST(request: Request) {
   try {
@@ -17,14 +18,14 @@ export async function POST(request: Request) {
     ];
 
     // Process each group and its jobs
-    data.groups.forEach((group: any) => {
-      group.jobs.forEach((job: any) => {
+    data.groups.forEach((group: Group) => {
+      group.jobs.forEach((job: Job) => {
         rows.push([
-          group.group,
-          parseFloat(group.groupsalary).toFixed(2),
+          group.group.toString(),
+          group.groupsalary.toFixed(2),
           job.title,
           job.department,
-          job.salary ? parseFloat(job.salary).toFixed(2) : ''
+          job.salary ? job.salary.toFixed(2) : ''
         ]);
       });
     });
