@@ -14,10 +14,11 @@ export const DEPARTMENT_COLORS: Record<DepartmentName, string> = {
   'Sonstige': '#F0F0F0'
 };
 // Helper functions
-export const formatCurrency = (salary: number): string => 
-  `€${salary.toFixed(2).replace('.', ',')}`;
+export const formatCurrency = (salary: number | undefined): string => 
+  salary !== undefined ? `€${salary.toFixed(2).replace('.', ',')}` : '-';
 
-export const calculatePercentageChange = (baseSalary: number, newSalary: number): string => {
+export const calculatePercentageChange = (baseSalary: number | undefined, newSalary: number): string => {
+  if (baseSalary === undefined) return '-';
   if (newSalary === 0) return baseSalary > 0 ? '+Infinity' : '0';
   const percentageChange = ((newSalary - baseSalary) / baseSalary) * 100;
   return percentageChange === 0 
@@ -26,18 +27,20 @@ export const calculatePercentageChange = (baseSalary: number, newSalary: number)
 };
 
 export const getPercentageChangeColor = (change: string): string => 
-  change === '0' 
-    ? 'text-blue-500' 
-    : change.startsWith('+') 
-      ? 'text-green-500' 
-      : 'text-red-500';
+  change === '-'
+    ? 'text-gray-500'
+    : change === '0' 
+      ? 'text-blue-500' 
+      : change.startsWith('+') 
+        ? 'text-green-500' 
+        : 'text-red-500';
 
 // Types
 export interface Job {
   id: string;
   title: string;
-  salary: number;
-  department: DepartmentName;  // Update this line
+  salary?: number;
+  department: DepartmentName;
 }
 
 export interface Group {

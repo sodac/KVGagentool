@@ -1,18 +1,18 @@
-"use client";import React, { useState, useCallback, useEffect, useRef } from 'react';
+"use client";
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
-import { PlusCircle, FileUp, Download } from 'lucide-react';
+import { PlusCircle, FileUp, Download, Eye, EyeOff } from 'lucide-react';
 import { Group, Job, DepartmentName,DEPARTMENT_COLORS } from './types';
 import GroupComponent from './group';
 import DepartmentFilter from './departmentFilter';
-import DepartmentOverview from './department-overview';
 
 interface ImportedJob {
   id: string;
   title: string;
-  salary: string | number;
-  department: DepartmentName;  // Update this to use DepartmentName
+  salary: string | number | undefined;
+  department: DepartmentName;
 }
 
 interface ImportedGroup {
@@ -31,8 +31,10 @@ const GagengruppenTool: React.FC = () => {
   const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
   const [exportFilename, setExportFilename] = useState('');
   const [salaryMode, setSalaryMode] = useState<'60h' | '40h'>('40h');
+  const [showSalaries, setShowSalaries] = useState(true);
 
-  const convertSalary = (salary: number, to: '40h' | '60h') => {
+  const convertSalary = (salary: number | undefined, to: '40h' | '60h') => {
+    if (salary === undefined) return undefined;
     if (to === '60h') {
       return salary / 0.560524819952065;
     }
@@ -72,25 +74,22 @@ const GagengruppenTool: React.FC = () => {
             jobs: g.jobs.map((j: ImportedJob) => ({
               id: j.id,
               title: j.title,
-              department: j.department as DepartmentName,  // Add type assertion here
-              salary: parseFloat(j.salary.toString())
+              department: j.department as DepartmentName,
+              salary: j.salary !== undefined ? parseFloat(j.salary.toString()) : undefined
             }))
           }));
-        }
-        
-        // And in the else if block:
-         else if (content.groups) {
+        } else if (content.groups) {
           importedGroups = content.groups.map((g: ImportedGroup) => ({
             ...g,
             groupsalary: parseFloat(g.groupsalary.toString()),
             jobs: g.jobs.map((j: ImportedJob) => ({
               id: j.id,
               title: j.title,
-              department: j.department as DepartmentName,  // Add type assertion here
-              salary: parseFloat(j.salary.toString())
+              department: j.department as DepartmentName,
+              salary: j.salary !== undefined ? parseFloat(j.salary.toString()) : undefined
             }))
           }));
-        }else {
+        } else {
           throw new Error('Invalid JSON structure');
         }
 
@@ -106,7 +105,7 @@ const GagengruppenTool: React.FC = () => {
       }
     };
     reader.readAsText(file);
-};
+  };
 
   // Export handling
   const handleExportClick = () => {
@@ -124,7 +123,7 @@ const GagengruppenTool: React.FC = () => {
         jobs: jobs.map(({ id, title, salary, department }) => ({
           id,
           title,
-          salary: salary.toFixed(2),
+          salary: salary !== undefined ? salary.toFixed(2) : undefined,
           department
         }))
       }))
@@ -163,7 +162,12 @@ const GagengruppenTool: React.FC = () => {
           }
           return {
             ...group,
-            jobs: [...group.jobs, job].sort((a, b) => b.salary - a.salary)
+            jobs: [...group.jobs, job].sort((a, b) => {
+              if (a.salary === undefined && b.salary === undefined) return 0;
+              if (a.salary === undefined) return 1;
+              if (b.salary === undefined) return -1;
+              return b.salary - a.salary;
+            })
           };
         }
         return {
@@ -220,6 +224,46 @@ const GagengruppenTool: React.FC = () => {
         .map((group, index) => ({ ...group, group: index + 1 }));
       return filteredGroups;
     });
+  };
+
+  const handleUpdateJob = (jobId: string, updatedJob: Job, groupId?: number) => {
+    setGroups(currentGroups =>
+      currentGroups.map(group => {
+        // If this is the target group for a new job
+        if (groupId !== undefined && group.group === groupId) {
+          return {
+            ...group,
+            jobs: [...group.jobs, updatedJob].sort((a, b) => {
+              if (a.salary === undefined && b.salary === undefined) return 0;
+              if (a.salary === undefined) return 1;
+              if (b.salary === undefined) return -1;
+              return b.salary - a.salary;
+            })
+          };
+        }
+        // For existing jobs
+        return {
+          ...group,
+          jobs: group.jobs.map(job =>
+            job.id === jobId ? updatedJob : job
+          ).sort((a, b) => {
+            if (a.salary === undefined && b.salary === undefined) return 0;
+            if (a.salary === undefined) return 1;
+            if (b.salary === undefined) return -1;
+            return b.salary - a.salary;
+          })
+        };
+      })
+    );
+  };
+
+  const handleDeleteJob = (jobId: string) => {
+    setGroups(currentGroups =>
+      currentGroups.map(group => ({
+        ...group,
+        jobs: group.jobs.filter(job => job.id !== jobId)
+      }))
+    );
   };
 
   return (
@@ -283,12 +327,30 @@ const GagengruppenTool: React.FC = () => {
         Neue Gruppe
       </Button>
 
-      {/* Department Filter */}
+      {/* Department Filter and Salary Toggle */}
       {groups.length > 0 && (
-        <DepartmentFilter
-          selectedDepartments={selectedDepartments}
-          onToggleDepartment={handleToggleDepartment}
-        />
+        <div className="flex justify-between items-center mb-4">
+          <DepartmentFilter
+            selectedDepartments={selectedDepartments}
+            onToggleDepartment={handleToggleDepartment}
+          />
+          <div className="flex items-center gap-2">
+            <Eye className={`w-5 h-5 ${showSalaries ? 'text-green-500' : 'text-gray-500'}`} />
+            <div 
+              className={`relative inline-flex h-8 w-14 cursor-pointer rounded-full transition-colors duration-200 ease-in-out ${
+                showSalaries ? 'bg-green-500' : 'bg-gray-400'
+              }`}
+              onClick={() => setShowSalaries(prev => !prev)}
+            >
+              <span 
+                className={`inline-block h-7 w-7 transform rounded-full bg-white shadow-lg transition duration-200 ease-in-out mt-0.5 ${
+                  !showSalaries ? 'translate-x-1' : 'translate-x-6'
+                }`}
+              />
+            </div>
+            <EyeOff className={`w-5 h-5 ${!showSalaries ? 'text-gray-400' : 'text-gray-500'}`} />
+          </div>
+        </div>
       )}
 
       {/* Groups */}
@@ -298,18 +360,23 @@ const GagengruppenTool: React.FC = () => {
             key={group.group}
             group={{
               ...group,
-              groupsalary: salaryMode === '60h' ? convertSalary(group.groupsalary, '60h') : group.groupsalary,
+              groupsalary: salaryMode === '60h' ? convertSalary(group.groupsalary, '60h')! : group.groupsalary,
             }}
             jobs={group.jobs.map(job => ({
               ...job,
-              salary: salaryMode === '60h' ? convertSalary(job.salary, '60h') : job.salary,
+              salary: job.salary !== undefined 
+                ? (salaryMode === '60h' ? convertSalary(job.salary, '60h') : job.salary)
+                : undefined,
             }))}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
             onGroupSalaryChange={handleGroupSalaryChange}
             onDeleteGroup={handleDeleteGroup}
+            onUpdateJob={handleUpdateJob}
+            onDeleteJob={handleDeleteJob}
             isOdd={index % 2 === 1}
             visibleDepartments={selectedDepartments}
+            showSalaries={showSalaries}
           />
         ))}
       </div>
@@ -335,14 +402,6 @@ const GagengruppenTool: React.FC = () => {
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Department Overview or Message */}
-      {groups.length > 0 ? (
-        <DepartmentOverview groups={groups} salaryMode={salaryMode} />
-      ) : (
-        <div className="mt-8 text-center text-gray-500">
-          Bitte zuerst eine passende .json Datei öffnen
-        </div>
-      )}
     </div>
   );
 };
