@@ -32,18 +32,27 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
   visibleDepartments,
   isOdd
 }) => {
-  const [localSalary, setLocalSalary] = useState(group.groupsalary);
+  const [localSalary, setLocalSalary] = useState(group.groupsalary.toFixed(2));
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    setLocalSalary(group.groupsalary);
+    setLocalSalary(group.groupsalary.toFixed(2));
   }, [group.groupsalary]);
 
   const handleSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalSalary(parseFloat(e.target.value));
+    setLocalSalary(e.target.value);
+  };
+
+  const handleSalaryFocus = () => {
+    setIsEditing(true);
+    setLocalSalary(parseFloat(localSalary).toString());
   };
 
   const handleSalaryBlur = () => {
-    onGroupSalaryChange(group.group, parseFloat(localSalary.toString()) || 0);
+    setIsEditing(false);
+    const value = parseFloat(localSalary) || 0;
+    setLocalSalary(value.toFixed(2));
+    onGroupSalaryChange(group.group, value);
   };
 
   // Filter jobs by visible departments and sort by salary
@@ -65,6 +74,7 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
             <Input
               type="number"
               value={localSalary}
+              onFocus={handleSalaryFocus}
               onChange={handleSalaryChange}
               onBlur={handleSalaryBlur}
               className="w-28 h-8 pl-6 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"

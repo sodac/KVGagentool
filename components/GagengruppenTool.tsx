@@ -30,7 +30,7 @@ const GagengruppenTool: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
   const [exportFilename, setExportFilename] = useState('');
-  const [salaryMode, setSalaryMode] = useState<'60h' | '40h'>('60h');
+  const [salaryMode, setSalaryMode] = useState<'60h' | '40h'>('40h');
 
   const convertSalary = (salary: number, to: '40h' | '60h') => {
     if (to === '60h') {
@@ -200,11 +200,12 @@ const GagengruppenTool: React.FC = () => {
   };
 
   const handleGroupSalaryChange = (groupId: number, salary: number) => {
-    const actualSalary = salaryMode === '40h' ? convertSalary(salary, '60h') : salary;
+    // If we're in 60h mode, convert the input to 40h for storage
+    const storageValue = salaryMode === '60h' ? salary * 0.560524819952065 : salary;
     setGroups(currentGroups =>
       currentGroups.map(group =>
         group.group === groupId
-          ? { ...group, groupsalary: actualSalary }
+          ? { ...group, groupsalary: storageValue }
           : group
       )
     );
@@ -222,54 +223,65 @@ const GagengruppenTool: React.FC = () => {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-2">
+    <div className="p-4 relative">
+      <h1 className="text-2xl font-bold mb-4">
         KV Filmschaffende Gagengruppen Tool
       </h1>
-      <div className="flex justify-between items-center mb-4">
-        <p className="text-sm text-gray-600">
-          Gagen laut KV 2025, {salaryMode === '60h' ? '§7(60h) inkl. SZ' : '40h exkl. SZ'}
-        </p>
-        <Button
+
+      <div className="flex items-center space-x-2 mb-4">
+        <span className={`font-medium ${salaryMode === '40h' ? 'text-green-500' : 'text-gray-500'}`}>40h</span>
+        <div 
+          className={`relative inline-flex h-8 w-14 cursor-pointer rounded-full transition-colors duration-200 ease-in-out ${
+            salaryMode === '40h' ? 'bg-green-500' : 'bg-red-500'
+          }`}
           onClick={() => setSalaryMode(prev => prev === '60h' ? '40h' : '60h')}
-          variant="outline"
-          className="ml-4"
         >
-          {salaryMode === '60h' ? 'Zu 40h wechseln' : 'Zu 60h wechseln'}
-        </Button>
-      </div>
-
-      <div className="flex justify-between items-center mb-4 mt-4">
-        <div className="flex items-center space-x-2">
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileImport}
-            accept=".json"
-            className="hidden"
+          <span 
+            className={`inline-block h-7 w-7 transform rounded-full bg-white shadow-lg transition duration-200 ease-in-out mt-0.5 ${
+              salaryMode === '40h' ? 'translate-x-1' : 'translate-x-6'
+            }`}
           />
-          <Button 
-            onClick={handleImportClick}
-            className="flex items-center space-x-2"
-          >
-            <FileUp size={20} />
-            <span>Datei öffnen</span>
-          </Button>
-          <Button 
-            onClick={handleExportClick}
-            className="flex items-center space-x-2"
-            disabled={groups.length === 0}
-          >
-            <Download size={20} />
-            <span>Datei speichern</span>
-          </Button>
         </div>
+        <span className={`font-medium ${salaryMode === '60h' ? 'text-red-500' : 'text-gray-500'}`}>60h</span>
+      </div>
 
-        <Button onClick={addNewGroup}>
-          <PlusCircle className="mr-2" size={20} />
-          Neue Gruppe
+      <p className="text-sm text-gray-600 mb-4">
+        Gagen laut KV 2025, {salaryMode === '60h' ? '§7(60h) inkl. SZ' : '40h exkl. SZ'}
+      </p>
+
+      <div className="flex items-center space-x-2 mb-4">
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileImport}
+          accept=".json"
+          className="hidden"
+        />
+        <Button 
+          onClick={handleImportClick}
+          className="flex items-center space-x-2"
+        >
+          <FileUp size={20} />
+          <span>Datei öffnen</span>
+        </Button>
+        <Button 
+          onClick={handleExportClick}
+          className="flex items-center space-x-2"
+          disabled={groups.length === 0}
+        >
+          <Download size={20} />
+          <span>Datei speichern</span>
         </Button>
       </div>
+
+      {/* Floating Add Group Button */}
+      <Button 
+        onClick={addNewGroup}
+        className="fixed bottom-6 right-6 rounded-full shadow-lg"
+      >
+        <PlusCircle className="mr-2" size={20} />
+        Neue Gruppe
+      </Button>
 
       {/* Department Filter */}
       {groups.length > 0 && (

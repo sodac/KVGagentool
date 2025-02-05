@@ -8,471 +8,415 @@
           "id": "job16",
           "title": "Kamera I",
           "salary": "2869.60",
-          "department": "Kamera",
-          "isExistingJob": true
+          "department": "Kamera"
         }
       ]
     },
     {
       "group": 2,
-      "groupsalary": "2045.36",
-      "jobs": [
-        {
-          "id": "job3",
-          "title": "Herstellungsleitung I",
-          "salary": "2094.05",
-          "department": "Produktion",
-          "isExistingJob": true
-        },
-        {
-          "id": "job15",
-          "title": "Synchronregie",
-          "salary": "2075.69",
-          "department": "Regie",
-          "isExistingJob": true
-        }
-      ]
-    },
-    {
-      "group": 3,
       "groupsalary": "1905.78",
       "jobs": [
         {
           "id": "job5",
           "title": "Produktionsleitung 1",
           "salary": "1998.04",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job2",
           "title": "Regieassistenz",
           "salary": "1269.03",
-          "department": "Regie",
-          "isExistingJob": true
+          "department": "Regie"
         }
       ]
     },
     {
-      "group": 4,
+      "group": 3,
       "groupsalary": "1513.42",
       "jobs": [
         {
           "id": "job40",
           "title": "Originaltonmeister:in I",
           "salary": "1805.65",
-          "department": "Ton",
-          "isExistingJob": true
+          "department": "Ton"
         },
         {
           "id": "job56",
           "title": "Mischtonmeister:in",
           "salary": "1729.19",
-          "department": "Ton",
-          "isExistingJob": true
+          "department": "Ton"
         },
         {
           "id": "job43",
           "title": "Filmarchitektur (Szenenbild)",
           "salary": "1479.42",
-          "department": "Szenenbild",
-          "isExistingJob": true
+          "department": "Szenenbild"
         },
         {
           "id": "job34",
           "title": "Kostümbild",
           "salary": "1418.22",
-          "department": "Kostüm",
-          "isExistingJob": true
+          "department": "Kostüm"
         },
         {
           "id": "job37",
           "title": "Chefmaskenbildner:in",
           "salary": "1418.22",
-          "department": "Maske",
-          "isExistingJob": true
+          "department": "Maske"
         },
         {
           "id": "job28",
           "title": "Editor (Schnitt)",
           "salary": "1315.49",
-          "department": "Schnitt",
-          "isExistingJob": true
+          "department": "Schnitt"
         },
         {
           "id": "job31",
           "title": "Sound Design",
           "salary": "1315.49",
-          "department": "Ton",
-          "isExistingJob": true
+          "department": "Ton"
         }
       ]
     },
     {
-      "group": 5,
-      "groupsalary": "1266.78",
+      "group": 4,
+      "groupsalary": "1266.79",
       "jobs": [
         {
           "id": "job38",
           "title": "Maskenbild,Frisur - Senior Maskenbild",
           "salary": "1315.49",
-          "department": "Maske",
-          "isExistingJob": true
+          "department": "Maske"
         },
         {
           "id": "job7",
           "title": "1.Aufnahmeleitung 1",
           "salary": "1206.93",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job45",
           "title": "Bühnenmeister:in, Oberbeleuchter:in",
           "salary": "1173.85",
-          "department": "Licht/Bühne",
-          "isExistingJob": true
+          "department": "Licht/Bühne"
         }
       ]
     },
     {
-      "group": 6,
+      "group": 5,
       "groupsalary": "1177.10",
       "jobs": [
         {
           "id": "job12",
           "title": "Filmgeschäftsführung",
           "salary": "1260.56",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job19",
           "title": "Kamera im Verbund",
           "salary": "1236.30",
-          "department": "Kamera",
-          "isExistingJob": true
+          "department": "Kamera"
         },
         {
           "id": "job22",
           "title": "Schwenker (Operator)",
           "salary": "1236.30",
-          "department": "Kamera",
-          "isExistingJob": true
+          "department": "Kamera"
         },
         {
           "id": "job20",
           "title": "1. Kameraassistenz",
           "salary": "1206.93",
-          "department": "Kamera",
-          "isExistingJob": true
+          "department": "Kamera"
         },
         {
           "id": "job10",
           "title": "Musikaufnahmeleitung",
           "salary": "1182.67",
-          "department": "Ton",
-          "isExistingJob": true
+          "department": "Ton"
         },
         {
           "id": "job25",
           "title": "Postproduktionskoordination",
           "salary": "1077.21",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job64",
           "title": "1. Kamerabühne",
           "salary": "1054.92",
-          "department": "Licht/Bühne",
-          "isExistingJob": true
+          "department": "Licht/Bühne"
         },
         {
           "id": "job30",
           "title": "Tonschnitt",
           "salary": "986.61",
-          "department": "Ton",
-          "isExistingJob": true
+          "department": "Ton"
         },
         {
           "id": "job9",
           "title": "2.Aufnahmeleitung (Set AL)",
           "salary": "975.56",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job14",
           "title": "Continuity/Script (Script Supervisor)",
           "salary": "920.05",
-          "department": "Regie",
-          "isExistingJob": true
+          "department": "Regie"
         }
       ]
     },
     {
-      "group": 7,
+      "group": 6,
       "groupsalary": "1036.97",
       "jobs": [
         {
           "id": "job42",
           "title": "Tonassistenz, Video- Primärtontechnik",
           "salary": "1154.56",
-          "department": "Ton",
-          "isExistingJob": true
+          "department": "Ton"
         },
         {
           "id": "job44",
           "title": "Filmarchitektassistenz (Szenenbildassistenz)",
           "salary": "1110.52",
-          "department": "Szenenbild",
-          "isExistingJob": true
+          "department": "Szenenbild"
         },
         {
           "id": "job32",
           "title": "Außenrequisite",
           "salary": "1078.67",
-          "department": "Szenenbild",
-          "isExistingJob": true
+          "department": "Szenenbild"
         },
         {
           "id": "job26",
           "title": "Digital Image Technican (DIT)",
           "salary": "1077.21",
-          "department": "Kamera",
-          "isExistingJob": true
+          "department": "Kamera"
         },
         {
           "id": "job33",
           "title": "Innenrequisite",
           "salary": "999.36",
-          "department": "Szenenbild",
-          "isExistingJob": true
+          "department": "Szenenbild"
         },
         {
           "id": "job35",
           "title": "Kostümbildassistenz",
           "salary": "983.50",
-          "department": "Kostüm",
-          "isExistingJob": true
+          "department": "Kostüm"
         },
         {
           "id": "job52",
           "title": "Motivaufnahmeleitung",
           "salary": "918.83",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job36",
           "title": "Set Kostüm",
           "salary": "888.32",
-          "department": "Kostüm",
-          "isExistingJob": true
+          "department": "Kostüm"
         },
         {
           "id": "job29",
           "title": "Schnittassistenz",
           "salary": "858.63",
-          "department": "Schnitt",
-          "isExistingJob": true
+          "department": "Schnitt"
         }
       ]
     },
     {
-      "group": 8,
+      "group": 7,
       "groupsalary": "952.89",
       "jobs": [
         {
           "id": "job62",
           "title": "Best Girl/Boy",
           "salary": "1022.95",
-          "department": "Licht/Bühne",
-          "isExistingJob": true
+          "department": "Licht/Bühne"
         },
         {
           "id": "job24",
           "title": "Produktionskoordination",
           "salary": "897.16",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         }
       ]
     },
     {
-      "group": 9,
+      "group": 8,
       "groupsalary": "857.60",
       "jobs": [
         {
           "id": "job23",
           "title": "Teamassistenz (ENG Team)",
           "salary": "1115.67",
-          "department": "Kamera",
-          "isExistingJob": true
+          "department": "Kamera"
         },
         {
           "id": "job21",
           "title": "2. Kameraassistenz",
           "salary": "919.00",
-          "department": "Kamera",
-          "isExistingJob": true
+          "department": "Kamera"
         },
         {
           "id": "job65",
           "title": "2. Kamerabühne",
           "salary": "895.08",
-          "department": "Licht/Bühne",
-          "isExistingJob": true
+          "department": "Licht/Bühne"
         },
         {
           "id": "job46",
           "title": "Bühne, Licht",
           "salary": "888.32",
-          "department": "Licht/Bühne",
-          "isExistingJob": true
+          "department": "Licht/Bühne"
         }
       ]
     },
     {
-      "group": 10,
+      "group": 9,
       "groupsalary": "728.68",
       "jobs": [
         {
           "id": "job48",
           "title": "Medienfachkraft",
           "salary": "839.29",
-          "department": "Sonstige",
-          "isExistingJob": true
+          "department": "Sonstige"
         },
         {
           "id": "job57",
           "title": "2. Tonassistenz",
           "salary": "799.93",
-          "department": "Ton",
-          "isExistingJob": true
+          "department": "Ton"
         },
         {
           "id": "job13",
           "title": "Produktionsassistenz",
           "salary": "767.13",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job27",
           "title": "Data Wrangler",
           "salary": "758.10",
-          "department": "Kamera",
-          "isExistingJob": true
+          "department": "Kamera"
         },
         {
           "id": "job55",
           "title": "2. Regieassistenz",
           "salary": "738.33",
-          "department": "Regie",
-          "isExistingJob": true
+          "department": "Regie"
         },
         {
           "id": "job53",
           "title": "Motivaufnahmeleitung Assistenz",
           "salary": "707.54",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         }
       ]
     },
     {
-      "group": 11,
-      "groupsalary": "646.84",
+      "group": 10,
+      "groupsalary": "646.85",
       "jobs": [
         {
           "id": "job60",
           "title": "Set Kostüm Assistenz",
           "salary": "676.74",
-          "department": "Kostüm",
-          "isExistingJob": true
+          "department": "Kostüm"
         },
         {
           "id": "job61",
           "title": "Junior Maskenbild",
           "salary": "676.74",
-          "department": "Maske",
-          "isExistingJob": true
+          "department": "Maske"
         }
       ]
     },
     {
-      "group": 12,
+      "group": 11,
       "groupsalary": "644.60",
       "jobs": [
         {
           "id": "job66",
           "title": "Kamerabühne Helfer:in",
           "salary": "676.74",
-          "department": "Licht/Bühne",
-          "isExistingJob": true
+          "department": "Licht/Bühne"
         },
         {
           "id": "job63",
           "title": "Jungbeleuchter:in",
           "salary": "676.74",
-          "department": "Licht/Bühne",
-          "isExistingJob": true
+          "department": "Licht/Bühne"
         },
         {
           "id": "job59",
           "title": "Set Requisite Assistenz",
           "salary": "676.74",
-          "department": "Szenenbild",
-          "isExistingJob": true
+          "department": "Szenenbild"
         },
         {
           "id": "job58",
           "title": "Requisitenfahrer:in",
           "salary": "676.74",
-          "department": "Szenenbild",
-          "isExistingJob": true
+          "department": "Szenenbild"
         }
       ]
     },
     {
-      "group": 13,
+      "group": 12,
       "groupsalary": "560.52",
       "jobs": [
         {
           "id": "job51",
           "title": "Werkstattprojekt",
           "salary": "594.12",
-          "department": "Sonstige",
-          "isExistingJob": true
+          "department": "Sonstige"
         },
         {
           "id": "job54",
           "title": "Setassistenz",
           "salary": "593.58",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job47",
           "title": "Produktionsfahrer",
           "salary": "580.16",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         }
       ]
     },
     {
-      "group": 14,
+      "group": 13,
       "groupsalary": "448.42",
       "jobs": [
         {
           "id": "job49",
           "title": "Filmaushilfskraft",
           "salary": "518.99",
-          "department": "Sonstige",
-          "isExistingJob": true
+          "department": "Sonstige"
+        }
+      ]
+    },
+    {
+      "group": 14,
+      "groupsalary": "1.68",
+      "jobs": [
+        {
+          "id": "job3",
+          "title": "Herstellungsleitung I",
+          "salary": "2094.05",
+          "department": "Produktion"
+        },
+        {
+          "id": "job15",
+          "title": "Synchronregie",
+          "salary": "2075.69",
+          "department": "Regie"
         }
       ]
     },
@@ -484,50 +428,43 @@
           "id": "job17",
           "title": "Kamera II",
           "salary": "2127.84",
-          "department": "Kamera",
-          "isExistingJob": true
+          "department": "Kamera"
         },
         {
           "id": "job18",
           "title": "Kamera III",
           "salary": "1639.46",
-          "department": "Kamera",
-          "isExistingJob": true
+          "department": "Kamera"
         },
         {
           "id": "job41",
           "title": "Originaltonmeister:in II",
           "salary": "1462.66",
-          "department": "Ton",
-          "isExistingJob": true
+          "department": "Ton"
         },
         {
           "id": "job4",
           "title": "Herstellungsleitung II",
           "salary": "1315.49",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job6",
           "title": "Produktionsleitung 2",
           "salary": "1295.05",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job8",
           "title": "1.Aufnahmeleitung 2",
           "salary": "1095.63",
-          "department": "Produktion",
-          "isExistingJob": true
+          "department": "Produktion"
         },
         {
           "id": "job39",
           "title": "Garderobe-, Maskenbild- und Requisitehilfe",
           "salary": "668.86",
-          "department": "Sonstige",
-          "isExistingJob": true
+          "department": "Sonstige"
         }
       ]
     }
