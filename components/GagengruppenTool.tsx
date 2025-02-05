@@ -145,7 +145,7 @@ const GagengruppenTool: React.FC = () => {
     setExportFilename('');
   };
 
-  const handleExcelExport = async () => {
+  const handleCsvExport = async () => {
     try {
       const exportData = {
         groups: groups.map(({ group, groupsalary, jobs }) => ({
@@ -160,7 +160,7 @@ const GagengruppenTool: React.FC = () => {
         }))
       };
 
-      const response = await fetch('/api/export-excel', {
+      const response = await fetch('/api/export-csv', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +168,11 @@ const GagengruppenTool: React.FC = () => {
         body: JSON.stringify(exportData),
       });
 
-      if (!response.ok) throw new Error('Failed to generate Excel file');
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Server response:', errorText);
+        throw new Error(`Failed to generate CSV file: ${errorText}`);
+      }
 
       // Get the blob from the response
       const blob = await response.blob();
@@ -177,7 +181,7 @@ const GagengruppenTool: React.FC = () => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'Gagengruppen_2025.xlsx';
+      link.download = 'Gagengruppen_2025.csv';
       document.body.appendChild(link);
       link.click();
       
@@ -185,8 +189,8 @@ const GagengruppenTool: React.FC = () => {
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Error exporting Excel:', error);
-      alert('Failed to generate Excel file');
+      console.error('Error exporting CSV:', error);
+      alert('Failed to generate CSV file');
     }
   };
 
@@ -362,12 +366,12 @@ const GagengruppenTool: React.FC = () => {
           <span>Datei speichern</span>
         </Button>
         <Button 
-          onClick={handleExcelExport}
+          onClick={handleCsvExport}
           className="flex items-center space-x-2"
           disabled={groups.length === 0}
         >
           <FileSpreadsheet size={20} />
-          <span>Excel Export</span>
+          <span>CSV Export</span>
         </Button>
       </div>
 
