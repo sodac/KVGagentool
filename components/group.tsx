@@ -40,7 +40,6 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
   showSalaries
 }) => {
   const [localSalary, setLocalSalary] = useState(group.groupsalary.toFixed(2));
-  const [isEditing, setIsEditing] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isJobDialogOpen, setIsJobDialogOpen] = useState(false);
 
@@ -53,12 +52,10 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
   };
 
   const handleSalaryFocus = () => {
-    setIsEditing(true);
     setLocalSalary(parseFloat(localSalary).toString());
   };
 
   const handleSalaryBlur = () => {
-    setIsEditing(false);
     const value = parseFloat(localSalary) || 0;
     setLocalSalary(value.toFixed(2));
     onGroupSalaryChange(group.group, value);
@@ -208,7 +205,6 @@ const GroupComponent: React.FC<GroupComponentProps> = ({
         onDelete={(jobId) => {
           onDeleteJob(jobId);
         }}
-        groupSalary={group.groupsalary}
       />
     </div>
   );

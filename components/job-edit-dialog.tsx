@@ -10,10 +10,9 @@ interface JobEditDialogProps {
   onClose: () => void;
   onSave: (updatedJob: Job) => void;
   onDelete: (jobId: string) => void;
-  groupSalary: number;
 }
 
-export function JobEditDialog({ job, isOpen, onClose, onSave, onDelete, groupSalary }: JobEditDialogProps) {
+export function JobEditDialog({ job, isOpen, onClose, onSave, onDelete }: JobEditDialogProps) {
   const [editedJob, setEditedJob] = useState<Job | null>(null);
   const [isExistingJob, setIsExistingJob] = useState(true);
 
